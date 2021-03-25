@@ -17,6 +17,10 @@ ___
    
   ![image](https://user-images.githubusercontent.com/76051264/112401178-4b48ea00-8d4d-11eb-9817-d8e29b8b7cda.png)  
 ------------------------------------------------------------------------------------------
+EX) Gallery를 설계할 경우
+▶ 클라우드에 IMG 등 Resource에 돼있을때, 클라이언트가 이미지 요청 시원본을 전송하면 안됨.
+ -> 원본.jpg(img01.jpg)와 Thumb.jpg(img01_m.jpg)
+ -> 
 
 [02] Oracle XE 18C 개발자 버전 설치, 최소 설치 사양, 계정의 생성 및 권한 부여, Oracle 18C 계정 생성       
 [01] Oracle 18C 설치
