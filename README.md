@@ -35,7 +35,6 @@ ___
 
 4. 로그인하여 'Oracle Database 11gR2 Expression Edition Windows x64' 선택하고 다운
 
-
 ★ 오라클 설치시 컴퓨터의 이름은 반드시 영문이어야 합니다. 
     한글이면 설치중 알수 없는 에러가 발생합니다. 노트북 주의
     한글이면 컴퓨터 등록정보에서 이름을 변경
@@ -47,7 +46,10 @@ ___
 - 설치 용량 안내
 - 설치시 관리자 계정인 'sys', 'system'은 패스워드를 수업의 편의를 위해 '1234'로 지정
   Enter Password: 1234
-  Confirm Password: 1234
+  Confirm Password: 1234  
+  
+  ![image](https://user-images.githubusercontent.com/76051264/112410716-00d06900-8d5f-11eb-9f9c-4bd7c10d2cd7.png)  
+------------------------------------------------------------------------------------------
 
 5.  설치 후 [제어판 > 관리 도구 > 서비스] 'OracleServiceXE', 'OracleXETNSListener' 서비스가
     작동되어야  - 상태가 시작됨이라고 되어 있어야
