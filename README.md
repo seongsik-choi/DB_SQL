@@ -113,16 +113,16 @@ SQL> ALTER USER ai8 IDENTIFIED BY 1234;
 - 로그인해야 다운가능함.
 - SQL Developer 다운로드: 
    https://www.oracle.com/tools/downloads/sqldev-downloads.html
-    
-2. msvcr100.dll 복사
-- 아래의 화면 처럼 복사
+ 
+2.1. sqldeveloper-20.4.1 "여기에풀기" - > 안에 폴더있음
+2.2. ai8 dic으로 sqldeveloper dic 이동
 
 3. sqldeveloper.exe 실행
    
 4. JAVA 연결(19.X 버전은 출력 안되는 경우 많음)
    - JDK 경로 요청시 'C:/jdk1.8.0'으로 지정할것.
    
-5. 접속 설정
+5. 접속 설정(http://soldeskit3.cafe24.com/pds/read.jsp?pdsgrpno=390&pdsno=18185&grpno=&col=&word=&currentPage=0&visible=)
 1) '+' 아이콘을 클릭 2) 접속 설정
    
 6. Auto commit 해제
@@ -145,9 +145,9 @@ SQL> ALTER USER ai8 IDENTIFIED BY 1234;
 3) 최종 설정 화면
 4. 생성된 SQL  파일
 5. 기본 SQL 실습
- 
+
+ ~~~
 ▷ C:/ai7/oracle/test.sql 
--------------------------------------------------------------------------------------
 DROP TABLE test;
 
 CREATE TABLE test(
@@ -195,4 +195,4 @@ WHERE testno=4;
 
 --Oracle: 한글 1자는 3바이트, 영문자/숫자/특수 문자는 1바이트 사용
 --MySQL: varchar(10)이면 모든 문자를 10자 저장 가능 
--------------------------------------------------------------------------------------
+~~~
