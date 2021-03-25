@@ -103,8 +103,7 @@ SQL> ALTER USER ai7 IDENTIFIED BY 1234;
      'C:/oraclexe/app/oracle/product/11.2.0/server/bin/sqlplus.exe /nolog' 파일을 실행합니다.
      
 [참고] Oracle 18C 계정 생성(Oracle 12C부터 계정 생성 규칙이 변경됨)
-
-1. ai7 계정 생성, 1234는 패스워드입니다.
+1. ai8 계정 생성, 1234는 패스워드입니다.
 - 생성되는 계정에 "C##"을 붙여야함.
 SQL> connect system
 Enter password:
