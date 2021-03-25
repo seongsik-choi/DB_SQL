@@ -1,7 +1,7 @@
 # 3) DB/SQL
 ## 데이터베이스/SQL 응용(Oracle/MariaDB/MySQL) 
 ___ 
-* **0325 : [01] 데이터베이스시스템 개론(DBMS), Oracle XE 18C 개발자 버전 설치, 최소 설치 사양, 계정의 생성 및 권한 부여, Oracle 18C 계정 생성       
+* **0325 : [01] 데이터베이스시스템 개론(DBMS), Oracle XE 18C 개발자 버전 설치, 최소 설치 사양, 계정의 생성 및 권한 부여, Oracle 18C 계정 생성**
 [01] 데이터베이스시스템 개론(DBMS)
      - 우리가 일상 업무나 생활에서 발생하는 데이터를 컴퓨터 기반의 데이터 
        저장소를 만들고 저장, 조회, 수정, 삭제, 통계를 제공하는 컴퓨터 시스템(SW).
@@ -114,16 +114,10 @@ SQL> DROP USER ai7 CASCADE;
 SQL> ALTER USER ai7 IDENTIFIED BY 1234;
 
 
-
 * 'Run SQL Command Line' 명령 콘솔 실행
    - 'Run SQL Command Line'이 없는 경우 
      'C:/oraclexe/app/oracle/product/11.2.0/server/bin/sqlplus.exe /nolog' 파일을 실행합니다.
      
-
-
-
-
-
 [참고] Oracle 18C 계정 생성(Oracle 12C부터 계정 생성 규칙이 변경됨)
 
 1. ai7 계정 생성, 1234는 패스워드입니다.
