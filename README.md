@@ -124,7 +124,8 @@ SQL> ALTER USER ai8 IDENTIFIED BY 1234;
    
 5. 접속 설정(http://soldeskit3.cafe24.com/pds/read.jsp?pdsgrpno=390&pdsno=18185&grpno=&col=&word=&currentPage=0&visible=)
 1) '+' 아이콘을 클릭 2) 접속 설정
-   
+  ![image](https://user-images.githubusercontent.com/76051264/112427923-c1fddb80-8d7d-11eb-972a-4f3faf1d7d8f.png)  
+ 
 6. Auto commit 해제
    - 개발시에는 'Auto Commit' 체크 권장
    - DBMS Transaction 사용시에는 'Auto Commit' 을 해제
