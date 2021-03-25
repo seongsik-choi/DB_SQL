@@ -20,10 +20,9 @@ ___
 EX) Gallery를 설계할 경우
 ▶ 클라우드에 IMG 등 Resource에 돼있을때, 클라이언트가 이미지 요청 시원본을 전송하면 안됨.
  -> 원본.jpg(img01.jpg)와 Thumb.jpg(img01_m.jpg)
- -> 
 
 [02] Oracle XE 18C 개발자 버전 설치, 최소 설치 사양, 계정의 생성 및 권한 부여, Oracle 18C 계정 생성       
-[01] Oracle 18C 설치
+[02] Oracle 18C 설치
       - http://www.oracle.com
  
 1. 시스템 사양
@@ -60,54 +59,22 @@ EX) Gallery를 설계할 경우
 5.  설치 후 [제어판 > 관리 도구 > 서비스] 'OracleServiceXE', 'OracleXETNSListener' 서비스가
     작동되어야  - 상태가 시작됨이라고 되어 있어야
 
-[02] 계정의 생성 및 권한 부여
-
+[03] 관리자 로그인 확인
 1. 윈도우 --> 시작 메뉴 --> Oracle Database 11g Expression Edition --> Run SQL Command Line 실행
     - exit: 종료
-    
+       
+[04] Oracle 18C 계정 생성(Oracle 12C부터 계정 생성 규칙이 변경됨)
+-> 로그인 : connect ai8
+-> 팀 프로젝트 시 새로운 계정 생성해주면 가능
 
-2. ai7 계정 생성, 1234는 패스워드입니다.
-SQL> connect system
-Enter password:
-Connected. 
-
-SQL> CREATE USER ai7 IDENTIFIED BY 1234;
-User created.
- 
-
-3. 권한 부여
- 1) 접속, 테이블 관련 권한
- SQL> GRANT CONNECT, RESOURCE to ai7;
- Grant succeeded.
-
- 2) View, Stored Procedure 관련 권한
- SQL> GRANT CREATE VIEW TO ai7;
- Grant succeeded. 
-
-4. 생성된 계정으로 접속
-SQL> connect ai7
-Enter password:
-Connected.
- 
-
-5. 사용자 삭제 
-SQL> DROP USER ai7 CASCADE; 
-
-
-6. 패스워드 변경
-SQL> ALTER USER ai7 IDENTIFIED BY 1234;
-
-
-* 'Run SQL Command Line' 명령 콘솔 실행
-   - 'Run SQL Command Line'이 없는 경우 
-     'C:/oraclexe/app/oracle/product/11.2.0/server/bin/sqlplus.exe /nolog' 파일을 실행합니다.
-     
-[참고] Oracle 18C 계정 생성(Oracle 12C부터 계정 생성 규칙이 변경됨)
 1. ai8 계정 생성, 1234는 패스워드입니다.
 - 생성되는 계정에 "C##"을 붙여야함.
-SQL> connect system
-Enter password:
-Connected. 
+사용자명 입력: system
+비밀번호 입력:
+
+다음에 접속됨:
+Oracle Database 18c Express Edition Release 18.0.0.0.0 - Production
+Version 18.4.0.0.0
 
 SQL> show user
 USER은 "SYSTEM"입니다
@@ -116,25 +83,116 @@ USER은 "SYSTEM"입니다
 SQL> ALTER SESSION SET "_ORACLE_SCRIPT"=true;
 세션이 변경되었습니다.
 
-SQL> CREATE USER ai7 IDENTIFIED BY 1234;
+SQL> CREATE USER ai8 IDENTIFIED BY 1234;
 User created.
  
 3. 권한 부여
 1) 접속, 테이블 관련 권한
-SQL> GRANT CONNECT, RESOURCE, DBA to ai7;
+SQL> GRANT CONNECT, RESOURCE, DBA to ai8;
 Grant succeeded.
 
 2) View, Stored Procedure 관련 권한
-SQL> GRANT CREATE VIEW TO ai7;
+SQL> GRANT CREATE VIEW TO ai8;
 Grant succeeded. 
 
-4. 생성된 계정으로 접속
-SQL> connect ai7
+4. 생성된 계정으로 접속(로그인)
+SQL> connect ai8
 Enter password: 1234
 Connected.
 
 5. 사용자 삭제 
-SQL> DROP USER ai7 CASCADE; 
+SQL> DROP USER ai8 CASCADE; 
 
 6. 패스워드 변경
-SQL> ALTER USER ai7 IDENTIFIED BY 1234;
+SQL> ALTER USER ai8 IDENTIFIED BY 1234;
+
+---------------------------------------------------------------
+[02] SQL Developer 19.2.1, 생성된 ai8 접속, msvcr100.dll 복사 설정       
+[01] SQL Developer 19.2.1
+1. https://www.oracle.com
+- 로그인해야 다운가능함.
+- SQL Developer 다운로드: 
+   https://www.oracle.com/tools/downloads/sqldev-downloads.html
+    
+2. msvcr100.dll 복사
+- 아래의 화면 처럼 복사
+
+3. sqldeveloper.exe 실행
+   
+4. JAVA 연결(19.X 버전은 출력 안되는 경우 많음)
+   - JDK 경로 요청시 'C:/jdk1.8.0'으로 지정할것.
+   
+5. 접속 설정
+1) '+' 아이콘을 클릭 2) 접속 설정
+   
+6. Auto commit 해제
+   - 개발시에는 'Auto Commit' 체크 권장
+   - DBMS Transaction 사용시에는 'Auto Commit' 을 해제
+   도구 -> 환경 설정... -> 데이터베이스 -> 객체 뷰어(ObjectViewer)
+
+7. 글꼴 설정
+8. 주석 색깔 지정
+9. 라인 번호 출력
+10. 날짜 출력 형식 지정
+- 날짜 형식: YYYY-MM-DD HH:MI:SS
+    
+[02]  기본적인 SQL 작업
+1. 새로운 SQL 파일 생성
+2. 'SQL 파일' 메뉴 선택
+3. SQL 파일 저장 위치 지정
+1) HOME 폴더로 이동하여 'oracle' 폴더 생성
+2) 생성된 'oracle' 폴더 선택
+3) 최종 설정 화면
+4. 생성된 SQL  파일
+5. 기본 SQL 실습
+ 
+▷ C:/ai7/oracle/test.sql 
+-------------------------------------------------------------------------------------
+DROP TABLE test;
+
+CREATE TABLE test(
+    testno    NUMBER(5)   NOT NULL, -- -99999 ~ +99999 
+    mname  VARCHAR(20) NOT NULL, -- 한글 3 byte, 영수자 1 byte 
+    funct     VARCHAR(50) NOT NULL, -- 주요 기술 분야  
+    PRIMARY KEY (testno)         -- 중복 안됨, 고유한 값만 가능  
+); 
+INSERT INTO test(testno, mname, funct) 
+VALUES(1, '왕눈이', 'JAVA/JSP/Spring'); 
+
+INSERT INTO test(testno, mname, funct) 
+VALUES(2, '아로미', 'JAVA/JSP/Spring/JQuery'); 
+
+INSERT INTO test(testno, mname, funct) 
+VALUES(3, '투투', 'JAVA/JSP/Spring/JQuery/HTML5'); 
+
+SELECT testno, mname, funct FROM test ORDER BY testno ASC; 
+
+-- TESTNO MNAME FUNCT
+-- ------ ----- ----------------------------
+--      1 왕눈이   JAVA/JSP/Spring
+--      2 아로미   JAVA/JSP/Spring/JQuery
+--      3 투투    JAVA/JSP/Spring/JQuery/HTML5
+
+-- VARCHAR 타입의 저장 가능 글자수 확인      
+INSERT INTO test(testno, mname, funct) 
+VALUES(4, '오늘은 금요일', 'JAVA/JSP/Spring/JQuery/HTML5');
+
+-- 한글: 3 byte, 그외의 문자는 1 byte (MySQL: 모든 문자 2 byte 처리)
+INSERT INTO test(testno, mname, funct) 
+VALUES(4, '오늘은 금요일 FRIDAY', 'JAVA/JSP/Spring/JQuery/HTML5');
+--ORA-12899: value too large for column "AI4"."TEST"."MNAME" (actual: 26, maximum: 20)
+
+INSERT INTO test(testno, mname, funct) 
+VALUES(4, '오늘은 금요일 FRIDAY 2020', 'JAVA/JSP/Spring/JQuery/HTML5');
+--ORA-12899: value too large for column "AI4"."TEST"."MNAME" (actual: 31, maximum: 20)
+
+SELECT testno, mname, funct 
+FROM test 
+ORDER BY testno ASC; 
+
+DELETE FROM test 
+WHERE testno=4;
+
+--Oracle: 한글 1자는 3바이트, 영문자/숫자/특수 문자는 1바이트 사용
+--MySQL: varchar(10)이면 모든 문자를 10자 저장 가능 
+-------------------------------------------------------------------------------------
