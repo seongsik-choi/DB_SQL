@@ -254,7 +254,7 @@ DELETE FROM test WHERE testno=4; -- 행지우기 : test 테이블에서 testno�
    - int: 정수 4바이트 지원
                      
 5. 대용량 데이터 타입
-   - CLOB: 문자 데이터 4GB까지 지원: 대용량 문자 처리
+   - CLOB(많이 사용★): 문자 데이터 4GB까지 지원: 대용량 문자 처리
    - BLOB: 바이너리 데이터 4GB까지 지원
   
 [02] DDL(Data Definition Language): 테이블 구조의 생성, 수정, 삭제 
