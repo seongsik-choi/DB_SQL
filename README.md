@@ -106,7 +106,7 @@ SQL> DROP USER ai8 CASCADE;
 SQL> ALTER USER ai8 IDENTIFIED BY 1234;
 
 ------------------------------------------------------------------------
-* **0326 : [02] SQL Developer 19.2.1, 생성된 ai8 접속, msvcr100.dll 복사 설정**
+* **0326 : [02] SQL Developer 19.2.1, 생성된 ai8 접속, msvcr100.dll 복사 설정**  
 [02] SQL Developer 19.2.1, 생성된 ai8 접속, msvcr100.dll 복사 설정       
 [01] SQL Developer 19.2.1
 1. https://www.oracle.com
