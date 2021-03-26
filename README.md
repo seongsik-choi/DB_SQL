@@ -52,10 +52,9 @@ EX) Gallery를 설계할 경우
   Enter Password: 1234
   Confirm Password: 1234  
   
-  ![image](https://user-images.githubusercontent.com/76051264/112410716-00d06900-8d5f-11eb-9f9c-4bd7c10d2cd7.png)  
+  ![image](https://user-images.githubusercontent.com/76051264/112410716-00d06900-8d5f-11eb-9f9c-4bd7c10d2cd7.png)    
   ![image](https://user-images.githubusercontent.com/76051264/112411550-71c45080-8d60-11eb-98a5-76ed7d86e542.png)  
 ------------------------------------------------------------------------------------------
-
 5.  설치 후 [제어판 > 관리 도구 > 서비스] 'OracleServiceXE', 'OracleXETNSListener' 서비스가
     작동되어야  - 상태가 시작됨이라고 되어 있어야
 
