@@ -133,8 +133,8 @@ SQL> ALTER USER ai8 IDENTIFIED BY 1234;
 
  6. Auto commit 해제
    - 개발시에는 'Auto Commit' 체크 권장
-   - DBMS Transaction 사용시에는 'Auto Commit' 을 해제
-   도구 -> 환경 설정... -> 데이터베이스 -> 객체 뷰어(ObjectViewer) + 고급
+   - DBMS Transaction 사용시에는 'Auto Commit' 을 해제  
+   도구 -> 환경 설정... -> 데이터베이스 -> 객체 뷰어(ObjectViewer) + 고급  
   **▶ 자동 커밋 설정 해제 : 실수 시 되돌리기 가능**
 
  7. 글꼴 설정(코드 편집기 -> 
