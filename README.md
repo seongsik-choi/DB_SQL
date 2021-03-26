@@ -237,3 +237,16 @@ ddl.sql + 생성 실습
  ~~~
 sequence.sql
 ~~~ 
+
+* **0326 : [04] Oracle 기본 SQL 사용, DML(Data Manipulation Language), INSERT, SELECT, UPDATE, DELETE, ORDER BY, LIKE**  
+[01] DML(Data Manipulation Language)
+  - 데이터를 등록, 목록, 수정, 삭제하는 SQL
+1. DML 실습 
+   - 데이터 조작어(Data Manipulation Language) : 데이터 조회 및 변형을 위한 명령어
+   - SELECT : 데이터 조회/ INSERT : 데이터 입력/ UPDATE : 데이터 수정/ DELETE : 데이터 삭제
+
+ 1) 검색(%: 없거나 하나 이상의 모든 문자)
+  - WHERE word LIKE '스위스' → word = '스위스'
+  - WHERE word LIKE '%스위스' → word = '잊지 못할 스위스'
+  - WHERE word LIKE '스위스%' → word = '스위스에서~'
+  - WHERE word LIKE '%스위스%' → word = '유럽 여행은 스위스 꼭 방문해야~'
