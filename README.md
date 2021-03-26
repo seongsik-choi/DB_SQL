@@ -233,14 +233,10 @@ DELETE FROM test WHERE testno=4; -- 행지우기 : test 테이블에서 testno�
    - 변경되지않는 고정길이 코드 저장등에 사용
 
      선언: CODE  CHAR(4)   NOT NULL,  <- 고정 길이 데이터 권장 
-            TITLE   짐HAR(50) NOT NULL   <- 메모리 낭비 발생 가능성 높음
+            TITLE   짐HAR(50) NOT NULL   <- 메모리 낭비 발생 가능성 높음  
  
-     CODE  TITLE
-     ------   ------------------------- 
-     A001   Seoul/  낭비 구간  /    
-     A002   Incheon Namdong-gu 
-     A003   Busan/  낭비 구간  /   
- 
+![image](https://user-images.githubusercontent.com/76051264/112568241-7d2d7f80-8e25-11eb-8071-9afceac954dc.png)  
+
 3. varchar, varchar2: 4000 Byte, 가변길이 문자 데이터 처리
    - name varchar(10) NOT NULL
      1바이트를 사용하면 나머지 9바이트는 재사용함.
