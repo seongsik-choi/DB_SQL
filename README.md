@@ -150,8 +150,9 @@ SQL> ALTER USER ai8 IDENTIFIED BY 1234;
 2) 생성된 'oracle' 폴더 선택
 3) 최종 설정 화면
 4. 생성된 SQL  파일
-5. 기본 SQL 실습
-
+5. 기본 SQL 실습  
+![image](https://user-images.githubusercontent.com/76051264/112563652-1d32db00-8e1d-11eb-980e-f9dfc7ebc4a8.png)  
+------------------------------------------------------------------------
  ~~~
 ▷ C:/ai7/oracle/test.sql 
 DROP TABLE test;
