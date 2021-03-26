@@ -107,37 +107,42 @@ SQL> ALTER USER ai8 IDENTIFIED BY 1234;
 
 ------------------------------------------------------------------------
 * **0326 : [02] SQL Developer 19.2.1, 생성된 ai8 접속, msvcr100.dll 복사 설정**  
+ **▶ Oracle DB : 유료 but, 중견기업이상은 Oracle 사용법 익혀야**
+ **▶ Oracle Standard : 많은 리소스 사용**
+ **▶ Oracle XE : Standard 개선, 보다 적은 리소스 사용**
+
 [02] SQL Developer 19.2.1, 생성된 ai8 접속, msvcr100.dll 복사 설정       
-[01] SQL Developer 19.2.1
-1. https://www.oracle.com
-- 로그인해야 다운가능함.
-- SQL Developer 다운로드: 
+ [01] SQL Developer 19.2.1
+ 1. https://www.oracle.com
+ - 로그인해야 다운가능함.
+ - SQL Developer 다운로드: 
    https://www.oracle.com/tools/downloads/sqldev-downloads.html
  
-2.1. sqldeveloper-20.4.1 "여기에풀기" - > 안에 폴더있음  
-2.2. ai8 dic으로 sqldeveloper dic 이동
+ 2.1. sqldeveloper-20.4.1 "여기에풀기" - > 안에 폴더있음  
+ 2.2. ai8 dic으로 sqldeveloper dic 이동
 
-3. sqldeveloper.exe 실행
+ 3. sqldeveloper.exe 실행
    
-4. JAVA 연결(19.X 버전은 출력 안되는 경우 많음)
+ 4. JAVA 연결(19.X 버전은 출력 안되는 경우 많음)
    - JDK 경로 요청시 'C:/jdk1.8.0'으로 지정할것.
    
-5. 접속 설정(http://soldeskit3.cafe24.com/pds/read.jsp?pdsgrpno=390&pdsno=18185&grpno=&col=&word=&currentPage=0&visible=)
-1) '+' 아이콘을 클릭 2) 접속 설정
+ 5. 접속 설정(http://soldeskit3.cafe24.com/pds/read.jsp?pdsgrpno=390&pdsno=18185&grpno=&col=&word=&currentPage=0&visible=)
+ 1) '+' 아이콘을 클릭 2) 접속 설정
   ![image](https://user-images.githubusercontent.com/76051264/112427923-c1fddb80-8d7d-11eb-972a-4f3faf1d7d8f.png)  
- 
-6. Auto commit 해제
+  -> 저장 -> 접속 -> 왼쪽 생성한 Tree 확인  
+
+ 6. Auto commit 해제
    - 개발시에는 'Auto Commit' 체크 권장
    - DBMS Transaction 사용시에는 'Auto Commit' 을 해제
-   도구 -> 환경 설정... -> 데이터베이스 -> 객체 뷰어(ObjectViewer)
+   도구 -> 환경 설정... -> 데이터베이스 -> 객체 뷰어(ObjectViewer) + 고급
+  **▶ 자동 커밋 설정 해제 : 실수 시 되돌리기 가능**
 
-7. 글꼴 설정
-8. 주석 색깔 지정
-9. 라인 번호 출력
-10. 날짜 출력 형식 지정
-- 날짜 형식: YYYY-MM-DD HH:MI:SS
+ 7. 글꼴 설정(코드 편집기 -> 
+ 8. 주석 색깔 지정(코드 편집기 -> PL/SQL 주석) 
+ 9. 라인 번호 출력코드 편집기 ->
+ 10. 날짜 출력 형식 지정 - 날짜 형식: YYYY-MM-DD HH:MI:SS  (데이터베이스 -> NLS)  
     
-[02]  기본적인 SQL 작업
+ [02]  기본적인 SQL 작업
 1. 새로운 SQL 파일 생성
 2. 'SQL 파일' 메뉴 선택
 3. SQL 파일 저장 위치 지정
