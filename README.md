@@ -114,7 +114,7 @@ SQL> ALTER USER ai8 IDENTIFIED BY 1234;
 - SQL Developer 다운로드: 
    https://www.oracle.com/tools/downloads/sqldev-downloads.html
  
-2.1. sqldeveloper-20.4.1 "여기에풀기" - > 안에 폴더있음
+2.1. sqldeveloper-20.4.1 "여기에풀기" - > 안에 폴더있음  
 2.2. ai8 dic으로 sqldeveloper dic 이동
 
 3. sqldeveloper.exe 실행
