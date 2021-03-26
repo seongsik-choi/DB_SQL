@@ -269,4 +269,3 @@ dml.sql
   3) 게시판 조회 : SELECT ~ FORM ~ WHERE ~ 
   4) 게시판 정보 수정 : UPDATE ~ SET ~ WHERE ~
   5) 게시판 정보 삭제 : DELET FORM ~ WHERE ~
-
