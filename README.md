@@ -219,10 +219,9 @@ ddl.sql + 생성 실습
 1. SEQUENCE
 - 레코드는 고유하게 구분되어야함으로 고유한 값이 필요함으로
   데이터를 구분값으로 사용하는 경우가 있고 Sequence즉 일련번호처럼
-  오라클에서 생성되는 값을 사용하는 경우도 있음.
+  오라클에서 생성되는 값을 사용하는 경우도 있음.  
+![image](https://user-images.githubusercontent.com/76051264/112588945-99401980-8e43-11eb-8126-cf58e4a25f6f.png)  
 
-
- 
   START WITH 1: 일련번호 1부터 시작
   INCREMENT BY 1: 일련번호를 1 씩 증가
   CACHE 2: 시퀀스를 테이블에 저장함으로 자주 Update가 발생함으로
