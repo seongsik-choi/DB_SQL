@@ -209,3 +209,55 @@ DELETE FROM test WHERE testno=4; -- 행지우기 : test 테이블에서 testno�
 ~~~
   **▶ 엑셀의 구조와 흡사함**
 ![image](https://user-images.githubusercontent.com/76051264/112565979-81579e00-8e21-11eb-88f2-a391c5bc3d4a.png)  
+------------------------------------------------------------------------
+* **0326 : [03] Oracle 기본 데이터 타입, DDL(Data Definition Language), 일련번호 자동 생성(Sequence) **  
+[01] Oracle 기본 데이터 타입
+1. 데이터 구조
+   - 규모: Column -> Record -> Table -> Tablespace -> Database
+   - 컬럼: 어떤 특징을 갖는 하나의 값  예) java, jsp, dbms 성적
+   - field: 컬럼의 값
+   - domain: field 값의 범위
+   - Record: Column의 집합, 행을 나타냄, row
+   - Table(Entity): Record의 집합, 테이블(엔티티), RDBMS는 2차원 배열의 형태를 가지고 있음, 엑셀 sheet와 비슷
+   - Tablespace: Table의 집합, 테이블 데이터의 성질에따라 최적화(정수, 문자열, 실수형등의 최적화)  
+   - Database: 계정과 Tablespace의 집합(MySQL: Database는 계정과 Table의 집합임)
+   
+2. char(n): 4000 Byte, 고정길이 문자 데이터 처리
+   - name char(10) NOT NULL
+   - 1바이트의 문자열이 할당 되더라도 10바이트를 전부 사용
+   - 처리속도가 가장 빠른 문자 타입니다. 하지만 메모리 낭비가 가장 심함
+     따라서 쓰이는 곳은 코드표라든지 길이가 일정한 컬럼에만 사용 
+   - 용량이 남는 경우 공백으로 채워짐
+   - 변경되지않는 고정길이 코드 저장등에 사용
+
+     선언: CODE  CHAR(4)   NOT NULL,  <- 고정 길이 데이터 권장 
+            TITLE   짐HAR(50) NOT NULL   <- 메모리 낭비 발생 가능성 높음
+ 
+     CODE  TITLE
+     ------   ------------------------- 
+     A001   Seoul/  낭비 구간  /    
+     A002   Incheon Namdong-gu 
+     A003   Busan/  낭비 구간  /   
+ 
+3. varchar, varchar2: 4000 Byte, 가변길이 문자 데이터 처리
+   - name varchar(10) NOT NULL
+     1바이트를 사용하면 나머지 9바이트는 재사용함.
+   - 용량을 매우 많이 절약할 수 있음, 하지만 사용된 사이즈를 계산해야 함으로 속도가 느린 문자 타입임
+   - 주로 길이가 심하게 변하는 게시판의 제목등에 많이 사용됨
+   - 한글을 1300자 정도 저장 가능
+   - 메모리 절약으로 많이 사용됨.
+ 
+4. number(n), number(p,s)
+   - 정수, 실수를 출력함.
+   - p는 전체 자리수, s는 소수점 이하의 자리 수
+     . kuk number(5) NOT NULL: -99999 ~ +99999 숫자 5자리 저장
+     . avg number(5, 2) NOT NULL: -999.99 ~ 999.99, 정수 3자리, 소수 2자리 
+     . varchar와 같은 가변길이 타입을 지원합니다.
+   - int: 정수 4바이트 지원
+                     
+5. 대용량 데이터 타입
+   - CLOB: 문자 데이터 4GB까지 지원: 대용량 문자 처리
+   - BLOB: 바이너리 데이터 4GB까지 지원
+  
+[02] DDL(Data Definition Language): 테이블 구조의 생성, 수정, 삭제 
+1. 테이블 구조
