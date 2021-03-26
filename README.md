@@ -253,3 +253,20 @@ sequence.sql
 ~~~
 dml.sql
 ~~~
+
+2. CRUD 패턴(매트릭스) : CREATE, READ, UPDATE, DELETE
+  - DB 개발시 공통적으로 발생하는 SQL
+  - '사원' 데이터 존재 시 
+  1) 사원 등록 : INSERT INTO ~ VALUES
+  2) 사원 목록 : SELECT ~ FORM ~ 
+  3) 사원 조회 : SELECT ~ FORM ~ WHERE ~ 
+  4) 사원 정보 수정 : UPDATE ~ SET ~ WHERE ~
+  5) 사원 정보 삭제 : DELET FORM ~ WHERE ~
+
+  - '게시판' 데이터 존재 시 
+  1) 게시판 등록 : INSERT INTO ~ VALUES
+  2) 게시판 목록 : SELECT ~ FORM ~ 
+  3) 게시판 조회 : SELECT ~ FORM ~ WHERE ~ 
+  4) 게시판 정보 수정 : UPDATE ~ SET ~ WHERE ~
+  5) 게시판 정보 삭제 : DELET FORM ~ WHERE ~
+
