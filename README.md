@@ -203,3 +203,4 @@ WHERE testno=4;
 --Oracle: 한글 1자는 3바이트, 영문자/숫자/특수 문자는 1바이트 사용
 --MySQL: varchar(10)이면 모든 문자를 10자 저장 가능 
 ~~~
+![image](https://user-images.githubusercontent.com/76051264/112565979-81579e00-8e21-11eb-88f2-a391c5bc3d4a.png)  
