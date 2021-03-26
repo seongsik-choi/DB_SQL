@@ -255,7 +255,7 @@ dml.sql
 ~~~
 
 2. CRUD 패턴(매트릭스) : CREATE, READ, UPDATE, DELETE
-  - DB 개발시 공통적으로 발생하는 SQL
+  - DB 개발시 공통적으로 발생하는 SQL, 모든 프로그램은 CRUD 패턴을 반복.
   - '사원' 데이터 존재 시 
   1) 사원 등록 : INSERT INTO ~ VALUES
   2) 사원 목록 : SELECT ~ FORM ~ 
