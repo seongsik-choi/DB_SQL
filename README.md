@@ -216,7 +216,7 @@ DELETE FROM test WHERE testno=4; -- 행지우기 : test 테이블에서 testno�
 [01] Oracle 기본 데이터 타입
 1. 데이터 구조
    - 규모: Column -> Record -> Table -> Tablespace -> Database
-   - 컬럼: 어떤 특징을 갖는 하나의 값  예) java, jsp, dbms 성적
+   - Column : 어떤 특징을 갖는 하나의 값  예) java, jsp, dbms 성적
    - field: 컬럼의 값
    - domain: field 값의 범위
    - Record: Column의 집합, 행을 나타냄, row
