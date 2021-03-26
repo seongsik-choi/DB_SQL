@@ -250,3 +250,6 @@ sequence.sql
   - WHERE word LIKE '%스위스' → word = '잊지 못할 스위스'
   - WHERE word LIKE '스위스%' → word = '스위스에서~'
   - WHERE word LIKE '%스위스%' → word = '유럽 여행은 스위스 꼭 방문해야~'
+~~~
+dml.sql
+~~~
