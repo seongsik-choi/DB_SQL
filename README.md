@@ -206,8 +206,10 @@ ORDER BY testno ASC;
 
 -- where == if
 DELETE FROM test WHERE testno=4; -- 행지우기 : test 테이블에서 testno가 = 4인 행을 지워라
-~~~
+~~~  
+
   **▶ 엑셀의 구조와 흡사함**  
+  
 ![image](https://user-images.githubusercontent.com/76051264/112565979-81579e00-8e21-11eb-88f2-a391c5bc3d4a.png)  
 ------------------------------------------------------------------------
 * **0326 : [03] Oracle 기본 데이터 타입, DDL(Data Definition Language), 일련번호 자동 생성(Sequence) **  
