@@ -222,19 +222,18 @@ ddl.sql + 생성 실습
   오라클에서 생성되는 값을 사용하는 경우도 있음.  
 ![image](https://user-images.githubusercontent.com/76051264/112589034-c260aa00-8e43-11eb-86be-8c113470a8f5.png)  
  
-- START WITH 1: 일련번호 1부터 시작   
-- INCREMENT BY 1: 일련번호를 1 씩 증가   
--  CACHE 2: 시퀀스를 테이블에 저장함으로 자주 Update가 발생함으로 이것을 줄이기위해 메모리에서 일련번호를 증가시키며 CACHE 명령을 이용해 증가 단위를 정의할 수 있음, 메모리에서 일련번호 증가, 처리 속도 향상, 기본값은 20임, INSERT가 많이 발생하면 기본값을 길게 해줌   
-- AXVALUE 9999999: 최대값을 9999999으로 지정  
-- NOCYCLE: 다시 1부터 생성되는 것을 방지    
-- Sequence는 시스템 테이블에 저장됨.  
-- MySQL은 'auto_increment'를 지정  
+ - START WITH 1: 일련번호 1부터 시작   
+ - INCREMENT BY 1: 일련번호를 1 씩 증가   
+ -  CACHE 2: 시퀀스를 테이블에 저장함으로 자주 Update가 발생함으로 이것을 줄이기위해 메모리에서 일련번호를 증가시키며 CACHE 명령을 이용해 증가 단위를 정의할 수 있음, 메모리에서 일련번호 증가, 처리 속도 향상, 기본값은 20임, INSERT가 많이 발생하면 기본값을 길게 해줌   
+ - AXVALUE 9999999: 최대값을 9999999으로 지정  
+ - NOCYCLE: 다시 1부터 생성되는 것을 방지    
+ - Sequence는 시스템 테이블에 저장됨.  
+ - MySQL은 'auto_increment'를 지정  
   memono INT NOT NULL AUTO_INCREMENT PRIMARY KEY  
 
 3. Sequence 사용하지 않는 기타 방법
-1) 자체 제작된 Sequence 테이블의 사용(테이블명, 일련번호...).
-2) Sub Query를 이용한 일련번호의 생성
-
+  1) 자체 제작된 Sequence 테이블의 사용(테이블명, 일련번호...).
+  2) Sub Query를 이용한 일련번호의 생성 
  ~~~
 sequence.sql
 ~~~ 
