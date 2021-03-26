@@ -146,7 +146,7 @@ SQL> ALTER USER ai8 IDENTIFIED BY 1234;
 1. 새로운 SQL 파일 생성
 2. 'SQL 파일' 메뉴 선택
 3. SQL 파일 저장 위치 지정
-1) HOME 폴더로 이동하여 'oracle' 폴더 생성
+1) ai8 폴더로 이동하여 'oracle' 폴더 생성
 2) 생성된 'oracle' 폴더 선택
 3) 최종 설정 화면
 4. 생성된 SQL  파일
