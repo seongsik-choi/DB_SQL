@@ -269,3 +269,111 @@ dml.sql
   3) 게시판 조회 : SELECT ~ FORM ~ WHERE ~ 
   4) 게시판 정보 수정 : UPDATE ~ SET ~ WHERE ~
   5) 게시판 정보 삭제 : DELET FORM ~ WHERE ~
+
+  ------------------------------------------------------------------------
+* **0331 : [MariaDB 01] MariaDB 10.3.27 다운로드 및 설정, 계정 생성, resort DB 생성** 
+~~~
+[01] MariaDB 10.3.21 다운로드 및 설정
+- Oracle의 MySQL 상업화 정책에 반대하여 MySQL 개발자가 MySQL과 동일한 소스로 제작된 DBMS
+
+1. 다운로드
+   - 공식 홈페이지: https://mariadb.org
+   - mariadb-10.3.28-winx64.zip ZIP file Windows x86_64     62.9 MB
+2. [mariadb-10.3.28-winx64.zip 선택 --> 여기에 풀기] 실행
+3. 'mariadb-10.3.28-winx64' 폴더를 'C:/ai7' 폴더로 복사후 'C:/ai8/mariadb-10.3' 폴더로 폴더 이름 변경 
+4. 한글 설정
+- Editplus에서 my.ini 생성해서 편집
+ 
+▷ C:/ai8/mariadb-10.3/data/my.ini 로 저장 ★★★★★
+[mysqld]
+datadir=C:/ai8/mariadb-10.3/data
+port=3306
+init_connect="SET collation_connection = utf8_general_ci"  
+init_connect="SET NAMES utf8"  
+character-set-server = utf8
+collation-server = utf8_general_ci
+ 
+[client]
+port=3306
+plugin-dir=C:/ai8/mariadb-10.3/lib/plugin
+default-character-set = utf8
+ 
+[mysqldump]
+default-character-set = utf8
+ 
+[mysql]
+default-character-set = utf8
+
+5. 서버 실행 : .bat 파일 만들기
+▷ C:/HOME/mariadb_server.bat
+C: 
+CD/ 
+CD ai8/mariadb-10.3/bin 
+mysqld.exe
+ 
+6. root 접속
+▷ C:/HOME/mariadb_root.bat
+C: 
+CD/ 
+CD ai8/mariadb-10.3/bin 
+start mysql.exe -u root
+  
+7. root 계정의 패스워드 변경
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.3.27-MariaDB mariadb.org binary distribution
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+MariaDB [(none)]> show databases;   <-- 실행 1
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.002 sec)
+
+MariaDB [(none)]> use mysql;   <-- 실행 2
+Database changed
+
+MariaDB [mysql]> SELECT host, user, password FROM user;   <-- 실행 3
++-----------+------+----------+
+| host      | user | password |
++-----------+------+----------+
+| localhost | root |          |
+| 127.0.0.1 | root |          |
+| ::1       | root |          |
++-----------+------+----------+
+3 rows in set (0.001 sec)
+
+MariaDB [mysql]> UPDATE user SET password=PASSWORD('1234') WHERE user='root';   <-- 실행 4
+Query OK, 3 rows affected (0.002 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+MariaDB [mysql]> SELECT host, user, password FROM user;   <-- 실행 5
++-----------+------+-------------------------------------------+
+| host      | user | password                                  |
++-----------+------+-------------------------------------------+
+| localhost | root | *A4B6157319038724E3560894F7F932C8886EBFCF |
+| 127.0.0.1 | root | *A4B6157319038724E3560894F7F932C8886EBFCF |
+| ::1       | root | *A4B6157319038724E3560894F7F932C8886EBFCF |
++-----------+------+-------------------------------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [mysql]> FLUSH PRIVILEGES;   <-- 실행 6
+Query OK, 0 rows affected (0.001 sec)
+MariaDB [mysql]> exit   <-- 실행 7
+
+8. root 접속 Password 등록
+▷ C:/HOME/mariadb_root.bat
+C: 
+CD/ 
+CD ai8/mariadb-10.3/bin 
+start mysql.exe -u root -p1234
+  
+9. 데이터베이스 생성
+- C:/HOME/mariadb_root.bat 실행
+MariaDB [(none)]> CREATE DATABASE resort;
+~~~
