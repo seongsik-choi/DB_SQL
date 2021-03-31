@@ -304,7 +304,7 @@ default-character-set = utf8
 [mysql]
 default-character-set = utf8
 
-5. 서버 실행 : .bat 파일 만들기
+5. 서버 실행 : .bat 파일 만들기 -> 작업관리자에 mysqld.exe 실행중이면 Ok.
 ▷ C:/HOME/mariadb_server.bat
 C: 
 CD/ 
@@ -366,14 +366,32 @@ MariaDB [mysql]> FLUSH PRIVILEGES;   <-- 실행 6
 Query OK, 0 rows affected (0.001 sec)
 MariaDB [mysql]> exit   <-- 실행 7
 
-8. root 접속 Password 등록
+8. root 접속 Password 등록 -> 변경
 ▷ C:/HOME/mariadb_root.bat
 C: 
 CD/ 
 CD ai8/mariadb-10.3/bin 
 start mysql.exe -u root -p1234
   
-9. 데이터베이스 생성
+9. 데이터베이스 생성(resort 지정 X) : 자신의 프로젝트 주제에 따라서 지정
 - C:/HOME/mariadb_root.bat 실행
-MariaDB [(none)]> CREATE DATABASE resort;
+MariaDB [(none)]> CREATE DATABASE resort;  <- 실행7
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [(none)]> show databases;  <- show databases로 db확인.
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| study              |			<- 내가 만든 데이터베이스 확인
+| test               |
++--------------------+
+5 rows in set (0.001 sec)
+~~~
+
+* **0401 : [MariaDB 02] ** 
+~~~
+
 ~~~
