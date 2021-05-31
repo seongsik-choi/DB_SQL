@@ -270,3 +270,220 @@ dml.sql
   4) 게시판 정보 수정 : UPDATE ~ SET ~ WHERE ~
   5) 게시판 정보 삭제 : DELET FORM ~ WHERE ~
   ------------------------------------------------------------------------
+
+* **[05][Resort] Amateras ERD/UML 설계툴, Resort 관리 시스템 제작 DBMS 모델링, Entity 산출, resort.erd 제작**
+* **[06][Categrp] Categrp DBMS 설계, 논리적 모델링, 물리적 모델링, PK, FK 관계(Relationship) 설정**
+* **[07][Categrp] Categrp 테이블 논리적 모델링, 물리적 모델링**
+* **[08][Categrp] Categrp Categrp SQL 제작, categrp.sql**
+* **[09][Cate] Cate 카테고리 DBMS 설계, 논리적/물리적 모델링, SQL 제작, cate_c.sql**
+* **[10][Contents] DBMS 논리적 모델링, 물리적 모델링, SQL 제작, 컨텐츠 영화 상품(contents_c.sql), 관리자(admin_c.sql) 제작**
+* **[11][Member] 회원 DBMS 설계(권한을 이용한 관리자 결합 모델), 논리적/물리적 모델링, SQL 제작, member.sql**
+
+* **[12][JOIN] Sql developer sql 파일 생성, RDBMS 테이블 결합 JOIN, categrp, contents join, oracle_join.sql**
+~~~
+[01] Sql developer sql 파일 생성
+1. 새로 만들기 선택
+2. 데이터베이스 파일 선택
+3. sql 파일 저장 위치 선택
+4. 최종 입력된 파일명 및 폴더: oracle_join.sql
+
+[02] RDBMS 테이블 결합 JOIN
+- PK, FK를 통한 테이블 결합
+
+1. Cross join
+- 정보로서의 가치가 매우 부족함.
+- 권장하지 않음.
+        
+2. Equal JOIN(INNER JOIN)
+- PK, FK 컬럼의 값이 같은 레코드 병합
+- WHERE 부모 테이블 PK = 자식 테이블 FK 같은 레코간의 결합
+- WHERE r.categrpno = c.categrpno: 2개의 테이블에서 categrpno 컬럼이 같은
+  레코드를 읽어 메모리상에서 하나의 레코드로 결합하여 메모리 테이블을
+  생성합니다. (DBMS는 많은 메모리 사용)
+
+3. LEFT Outer join(LEFT Join)
+- 부모 테이블의 PK중 자식 테이블에서 사용되지 않는 PK도 출력시 사용
+- 자식 테이블 방향에 선언한 '+'는 대응하는 레코드가 없으면 NULL 값으로 출력
+- 사용하지 않는 PK 부모(왼쪽) 테이블 레코드 모두 출력됨.
+
+4. RIGHT Outer join(RIGHT Join)(발생하면 안되는 join)
+- 오른쪽 자식 테이블 기준 레코드 모두 출력
+- 일반적으로 INNER join과 동일한 결과
+- '+' 부모테이블에 선언함.
+- 부모 테이블의 PK가 FK로 선언되지 않은 자식 테이블 레코드 출력
+- FK가 선언된 테이블은 없는 PK를 사용시 'Parent key not found' 에러가 발생하여 레코드 등록이 안됨.
+- INSERT시에 PK, FK 제약조건이 걸린경우 FK는 반드시 값이 있어야함으로 발생하기 어려운 상황.
+- 제약조건이 만들어지기 전에 추가된 자식 레코드의 발견(권장 하지 않음)
+
+5. FULL Outer join
+- left outer join, right outer join의 결합
+- 일반적으로 left outer join과 결과가 같음
+
+6. C:/ai8/oracle/oracle_join.sql
+-------------------------------------------------------------------------------------
+-- FK를 무시하고 부모 테이블 삭제
+-- DROP TABLE categrp CASCADE CONSTRAINTS;
+
+-- 1) 부모 테이블 생성 후 SELECT 결과
+SELECT categrpno, name, seqno, visible, rdate
+FROM categrp
+ORDER BY categrpno ASC;
+
+ CATEGRPNO NAME                                                    SEQNO V RDATE              
+---------- -------------------------------------------------- ---------- - -------------------
+         1 영화                                                        1 Y 2021-05-31 11:56:05
+         2 여행                                                        2 Y 2021-05-31 11:56:05
+         3 음악                                                        3 Y 2021-05-31 11:56:05
+         
+-- 2) 자식 테이블 생성 후 SELECT 결과         
+-- DROP TABLE cate CASCADE CONSTRAINTS;
+SELECT cateno, categrpno, name, visible, rdate, cnt
+FROM cate
+ORDER BY cateno ASC;     
+
+    CATENO  CATEGRPNO NAME                                               RDATE                      CNT
+---------- ---------- -------------------------------------------------- ------------------- ----------
+         1          1 SF                                                 2021-05-31 12:05:07          0
+         2          1 드라마                                             2021-05-31 12:05:07          0
+         3          1 로코                                               2021-05-31 12:05:07          0
+
+--3) Cross Join
+-- 정보로서 가치가 없음.
+-- 부모테이블 레코드 3 건 x 자식 테이블 레코드 3건 = 9건
+-- Where 조건(a.col=b.col)이 없는 경우 사용
+SELECT categrp.categrpno, categrp.name, categrp.seqno,
+          cate.cateno, cate.name, cate.categrpno
+FROM categrp, cate
+ORDER BY categrp.categrpno ASC, cate.cateno ASC;
+
+-- 테이블 별명
+SELECT r.categrpno, r.name, r.seqno,
+           c.cateno, c.name, c.categrpno
+FROM categrp r, cate c
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+-- 컬럼 별명, 동일한 컬럼명이 존재하는 경우(Alias)
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno as r_seqno,
+           c.cateno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r, cate c
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+-- ANSI SQL(ORACLE, MYSQL 구문이 동일)
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno,
+           c.cateno as c_cateno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r CROSS JOIN cate c
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+-- 4) Equal JOIN(INNER JOIN)
+-- 2개의 테이블에서 categrpno 컬럼의 값이 일치하는 레코드만 병합되어 출력
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno as r_seqno,
+           c.cateno, c.categrpno as c_categrpno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r, cate c
+WHERE r.categrpno = c.categrpno  -- PK = FK 비교
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+R_CATEGRPNO R_NAME      R_SEQNO    CATENO  C_CATEGRPNO C_NAME          C_CATEGRPNO
+----------- ------------------ ---------- ---------- ----------- -----------------------------------------------
+          1 영화                 1          1           1 SF                                                           1
+          1 영화                  1          2           1 드라마                                                       1
+          1 영화                 1          3           1 로코                                                         1
+
+          
+-- ANSI : ON조건(col명 동일, as명 필수)
+-- INNTER JOIN : Join table 순서 바뀌어도 동일
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno,
+           c.cateno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r INNER JOIN cate c ON r.categrpno = c.categrpno
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+-- ANSI + ON(Join 조건) + WHERE(일반 조건)
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno,
+           c.cateno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r INNER JOIN cate c ON r.categrpno = c.categrpno
+WHERE c.name = 'SF'
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+R_CATEGRPNO R_NAME           SEQNO   CATENO C_NAME       C_CATEGRPNO
+-----------       ------------------ ----------    ----------   -------------- ----------
+          1         영화                    1          1                 SF                  1
+          
+-- ANSI 사용하지않는 경우 WHERE 조건으로 나열
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno,
+           c.cateno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r, cate c WHERE (r.categrpno = c.categrpno) AND c.name = 'SF'
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+-- 5. LEFT Outer join(부모 테이블 레코드 모두 출력)
+-- categrp 테이블의 모든 레코드는 출력, cate table은 그에 대응되는 값들만 출력
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno,
+           c.cateno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r, cate c
+WHERE r.categrpno = c.categrpno(+) -- 부모 PK = 자식 FK +
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+R_CATEGRPNO R_NAME         SEQNO     CATENO C_NAME         C_CATEGRPNO
+-----------       ------------------ ----------    ----------   -------------- ----------
+          1         영화                    1             1                 SF                  1
+          1         영화                    1             2                 드라마            1
+          1         영화                    1             3                 스릴러            1
+          2         여행                    2           null               null              null
+          3         캠핑                    3           null               null              null
+          
+-- ANSI(LEFT OUTER JOIN) 위와 같음, 조인 순서 영향 받음.
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno,
+           c.cateno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r LEFT OUTER JOIN cate c
+ON r.categrpno = c.categrpno
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+-- 6. RIGHT Outer join(부모 테이블이 없는 상태에서 나중에 추가된 경우)
+-- SELECT 결과가 없어야 정상적인 경우임.
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno,
+           c.cateno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r, cate c
+WHERE r.categrpno(+) = c.categrpno
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+-- categrpno가 없는 insert문은 생성 no
+INSERT INTO cate(cateno, categrpno, name, rdate, cnt)
+VALUES(cate_seq.nextval, 10, '지구 온난화', sysdate, 0);
+COMMIT;
+
+-- 제약 조건의 삭제(cate table의 FK constraints 확인)
+-- ALTER TABLE cate DROP CONSTRAINT SYS_C007365;
+-- 실행 시 제약조건 변경(FK 사라짐)
+
+-- 제약 조건의 추가
+-- ALTER TABLE cate ADD FOREIGN KEY(categrpno) REFERENCES categrp(categrpno);
+
+R_CATEGRPNO R_NAME           R_SEQNO   C_CATENO C_NAME       C_SEQNO
+-----------       ------------------ ----------    ----------   -------------- ----------
+          1         영화                    1          1                 SF                  1
+          1         영화                    1          2                 드라마            1
+          1         영화                    1          3                 스릴러            1
+        null        null                    null       4                 온나화            2  
+  
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno,
+           c.cateno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r
+RIGHT OUTER JOIN cate c
+ON r.categrpno = c.categrpno
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+-- 7. FULL Outer join
+SELECT r.categrpno as r_categrpno, r.name as r_name, r.seqno,
+           c.cateno, c.name as c_name, c.categrpno as c_categrpno
+FROM categrp r
+FULL OUTER JOIN cate c
+ON r.categrpno = c.categrpno
+ORDER BY r.categrpno ASC, c.cateno ASC;
+
+R_CATEGRPNO R_NAME           R_SEQNO   C_CATENO C_NAME       C_SEQNO
+-----------       ------------------ ----------    ----------   -------------- ----------
+          1         영화                    1             1                 SF                  1
+          1         영화                    1             2                 드라마            1
+          1         영화                    1             3                 스릴러            1
+          2         여행                    2           null               null              null
+          3         캠핑                    3           null               null              null
+-------------------------------------------------------------------------------------
+~~~
