@@ -487,3 +487,344 @@ R_CATEGRPNO R_NAME           R_SEQNO   C_CATENO C_NAME       C_SEQNO
           3         캠핑                    3           null               null              null
 -------------------------------------------------------------------------------------
 ~~~
+
+* **[13][JOIN] self join, oracle_join_self.sql, 제약 조건의 추가/삭제, Self Join erd 제작**
+~~~
+1. C:/ai8/oracle/oracle_join_self.sql
+-------------------------------------------------------------------------------------
+-- 첫번째 레코드 등록시 생성될 PK 값을 FK 값으로 사용해야 최초 등록 가능. 
+-- 두번째부터는 FK값으로 생성될 PK를 지정.
+           
+DROP TABLE position;
+
+CREATE TABLE position(
+  positionno NUMBER(5) NOT NULL,
+  name       VARCHAR(30) NOT NULL, 
+  employee  VARCHAR(30) NOT NULL,
+  officer     NUMBER(5) NOT NULL,
+  PRIMARY KEY(positionno),
+  FOREIGN KEY(officer) REFERENCES position(positionno)
+);
+
+COMMENT ON TABLE position is '직책';
+COMMENT ON COLUMN position.positionno is '직책 번호';
+COMMENT ON COLUMN position.name is '직책 이름';
+COMMENT ON COLUMN position.employee is '사원명';
+COMMENT ON COLUMN position.officer is '상급 직책 사원명';
+
+SELECT MAX(positionno) as positionno FROM position;
+positionno
+-----------
+null
+
+SELECT MAX(positionno) + 1 as positionno FROM position;
+positionno
+-----------
+null
+
+SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position;
+POSITIONNO
+----------
+         1
+
+-- FK가 생성될 PK를 값으로하는 경우, 첫번째 레코드만 예외적으로 최초 등록 가능
+SELECT positionno,name, employee, officer
+FROM position
+ORDER BY positionno ASC;
+
+선택된 행 없음
+
+INSERT INTO position(positionno,
+                              name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '대표이사', '아로미', 1);
+            
+SELECT positionno,name, employee, officer
+FROM position
+ORDER BY positionno ASC;
+
+ POSITIONNO   NAME     EMPLOYEE   OFFICER
+ ---------------- -------     -------------  ----------
+          1          대표이사  아로미            1
+          
+INSERT INTO position(positionno,
+                              name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '이사', '피어스', 10);
+-- ORA-02291: integrity constraint (AI3.SYS_C007082) violated - parent key not found
+
+-- 이사의 상관은 대표이사           
+INSERT INTO position(positionno,
+                              name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '이사', '왕눈이', 1);
+
+SELECT * FROM position ORDER BY positionno ASC;
+
+ POSITIONNO NAME     EMPLOYEE OFFICER
+ --------------- ----------  ------------ ----------
+          1         대표이사  아로미            1
+          2         이사        왕눈이            1
+
+-- 상무의 상관은 이사     
+INSERT INTO position(positionno,
+                              name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '상무', '가길동', 2);
+
+SELECT * FROM position ORDER BY positionno ASC;
+
+ POSITIONNO NAME     EMPLOYEE OFFICER
+ --------------- ----------  ------------ ----------
+          1         대표이사  아로미            1
+          2         이사        왕눈이            1
+          3         상무        가길동            2
+
+-- 부장의 상관은 상무            
+INSERT INTO position(positionno,
+                              name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '부장', '나길동', 3);
+       
+SELECT * FROM position ORDER BY positionno ASC;
+
+ POSITIONNO NAME     EMPLOYEE OFFICER
+ --------------- ----------  ------------ ----------
+          1         대표이사  아로미            1
+          2         이사        왕눈이            1
+          3         상무        가길동            2
+          4         부장        나길동            3
+
+INSERT INTO position(positionno,
+                              name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '차장', '다길동', 4);
+
+-- 차장의 상관은 부장   
+SELECT * FROM position ORDER BY positionno ASC;
+
+ POSITIONNO NAME     EMPLOYEE OFFICER
+ --------------- ----------  ------------ ----------
+          1         대표이사  아로미            1
+          2         이사        왕눈이            1
+          3         상무        가길동            2
+          4         부장        나길동            3
+          5         차장        다길동            4
+
+-- 과장의 상관은 차장
+INSERT INTO position(positionno,
+                                 name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '과장', '라길동', 5);
+            
+INSERT INTO position(positionno,
+                                 name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '과장2', '휴잭맨', 5);            
+       
+SELECT * FROM position ORDER BY positionno ASC;
+
+ POSITIONNO NAME     EMPLOYEE OFFICER
+ --------------- ----------  ------------ ----------
+          1         대표이사  아로미            1
+          2         이사        왕눈이            1
+          3         상무        가길동            2
+          4         부장        나길동            3
+          5         차장        다길동            4
+          6         과장        라길동            5
+          7         과장2      휴잭맨            5          
+
+-- 대리의 상관은 과장
+INSERT INTO position(positionno,
+                              name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '대리', '마길동', 6);
+       
+SELECT * FROM position ORDER BY positionno ASC;
+
+ POSITIONNO NAME     EMPLOYEE OFFICER
+ --------------- ----------  ------------ ----------
+          1         대표이사  아로미            1
+          2         이사        왕눈이            1
+          3         상무        가길동            2
+          4         부장        나길동            3
+          5         차장        다길동            4
+          6         과장        라길동            5
+          7         과장2      휴잭맨            5                    
+          8         대리        마길동            6
+
+INSERT INTO position(positionno,
+                              name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '대리', '홍길순', 6);
+       
+SELECT * FROM position ORDER BY positionno ASC;
+
+ POSITIONNO NAME     EMPLOYEE OFFICER
+ --------------- ----------  ------------ ----------
+          1         대표이사  아로미            1
+          2         이사        왕눈이            1
+          3         상무        가길동            2
+          4         부장        나길동            3
+          5         차장        다길동            4
+          6         과장        라길동            5
+          7         과장2      휴잭맨            5          
+          8         대리        마길동            6
+          9         대리        홍길순            6
+          
+INSERT INTO position(positionno,
+                              name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '주임', '강하늘', 9);
+       
+SELECT * FROM position ORDER BY positionno ASC;
+
+ POSITIONNO NAME     EMPLOYEE OFFICER
+ --------------- ----------  ------------ ----------
+          1         대표이사  아로미            1
+          2         이사        왕눈이            1
+          3         상무        가길동            2
+          4         부장        나길동            3
+          5         차장        다길동            4
+          6         과장        라길동            5
+          7         과장2      휴잭맨            5          
+          8         대리        마길동            6
+          9         대리        홍길순            6
+          10       주임        강하늘            9
+          
+INSERT INTO position(positionno,
+                              name, employee, officer)
+VALUES((SELECT NVL(MAX(positionno), 0) + 1 as positionno FROM position),
+            '사원', '공효진', 10);
+       
+SELECT * FROM position ORDER BY positionno ASC;
+
+ POSITIONNO NAME     EMPLOYEE OFFICER
+ --------------- ----------  ------------ ----------
+          1         대표이사  아로미            1
+          2         이사        왕눈이            1
+          3         상무        가길동            2
+          4         부장        나길동            3
+          5         차장        다길동            4
+          6         과장        라길동            5
+          7         과장2      휴잭맨            5                
+          8         대리        마길동            6
+          9         대리        홍길순            6
+         10        주임        강하늘            9
+         11        사원        공효진            9
+          
+-- Self join
+SELECT p.positionno, p.name, p.employee, p.officer,
+          c.name, c.employee
+FROM position p, position c
+WHERE p.officer = c.positionno 
+ORDER BY positionno ASC;
+
+ POSITIONNO NAME EMPLOYEE OFFICER NAME EMPLOYEE
+ ---------- ---- -------- ------- ---- --------
+          1 대표이사 아로미            1 대표이사 아로미
+          2 이사       왕눈이            1 대표이사 아로미
+          3 상무       가길동            2 이사   왕눈이
+          4 부장       나길동            3 상무   가길동
+          5 차장       다길동            4 부장   나길동
+          6 과장       라길동            5 차장   다길동
+          7 과장2     휴잭맨            5 차장   다길동
+          8 대리       마길동            6 과장   라길동
+          9 대리       홍길순            6 과장   라길동
+         10 주임      강하늘            9 대리   홍길순
+         11 사원      공효진          10 주임   강하늘
+         
+-- ANSI
+SELECT p.positionno, p.name, p.employee, p.officer,
+          c.name, c.employee
+FROM position p
+INNER JOIN position c
+ON p.officer = c.positionno 
+ORDER BY positionno ASC;
+
+DELETE FROM position;
+
+COMMIT;
+-------------------------------------------------------------------------------------
+ 
+2. 제약 조건의 추가/삭제
+▷ C:/ai7/oracle/constraint.sql
+-------------------------------------------------------------------------------------
+-- constraint.sql
+1) 테이블 생성
+CREATE TABLE department(
+  no       NUMBER(10)      NOT NULL,
+  name   VARCHAR(100)   NOT NULL,
+  PRIMARY KEY(no)
+);
+
+2) 제약 조건의 확인
+-- 시스템에는 모두 대문자로 저장됨으로 WHERE 조건을 대문자로 구성 할 것.
+SELECT constraint_name, constraint_type, search_condition
+FROM ALL_CONSTRAINTS
+WHERE TABLE_NAME='DEPARTMENT'; 
+
+CONSTRAINT_NAME                C SEARCH_CONDITION                                                                
+------------------------------ - --------------------------------------------------------------------------------
+SYS_C007433                    C "NO" IS NOT NULL                                                                
+SYS_C007434                    C "NAME" IS NOT NULL                                                              
+SYS_C007435                    P                                                                                 
+
+2) PK 제약 조건의 삭제
+ALTER TABLE department 
+DROP CONSTRAINT SYS_C008237;
+
+SELECT constraint_name, constraint_type, search_condition
+FROM ALL_CONSTRAINTS
+WHERE TABLE_NAME='DEPARTMENT';
+
+CONSTRAINT_NAME                C SEARCH_CONDITION                                                                
+------------------------------ - --------------------------------------------------------------------------------
+SYS_C007433                    C "NO" IS NOT NULL                                                                
+SYS_C007434                    C "NAME" IS NOT NULL                                                              
+
+3) 이름을 지정한 제약 조건의 추가
+ALTER TABLE department 
+ADD CONSTRAINT department_pk PRIMARY KEY (no);
+
+SELECT constraint_name, constraint_type, search_condition
+FROM ALL_CONSTRAINTS
+WHERE TABLE_NAME='DEPARTMENT';
+
+CONSTRAINT_NAME                C SEARCH_CONDITION                                                                
+------------------------------ - --------------------------------------------------------------------------------
+SYS_C008235                         C "NO" IS NOT NULL                                                                
+SYS_C008236                         C "NAME" IS NOT NULL                                                              
+DEPARTMENT_PK                    P                                         
+
+4) FK 테이블 생성
+DROP TABLE employee;
+CREATE TABLE employee(
+  empno  NUMBER(10)      NOT NULL,  -- PK
+  name    VARCHAR(100)   NOT NULL,
+  no        NUMBER(10)      NOT NULL,  -- FK
+  PRIMARY KEY(empno)
+);
+
+5) FK 추가
+ALTER TABLE employee 
+ADD CONSTRAINT employee_department_fk 
+FOREIGN KEY (no) REFERENCES department(no);
+                                 
+SELECT constraint_name, constraint_type, search_condition
+FROM ALL_CONSTRAINTS
+WHERE TABLE_NAME='EMPLOYEE';
+
+CONSTRAINT_NAME                    C   SEARCH_CONDITION                                                                
+------------------------------           -   --------------------------------------------------------------------------------
+EMPLOYEE_DEPARTMENT_FK         R                                                                                 
+SYS_C007441                              C   "EMPNO" IS NOT NULL                                                             
+SYS_C007442                              C   "NAME" IS NOT NULL                                                              
+SYS_C007443                              C   "NO" IS NOT NULL                                                                
+SYS_C007444                              P           
+-------------------------------------------------------------------------------------
+ 
+3. Self Join erd 제작
+1) STS
+2) SQL Developer
+~~~
